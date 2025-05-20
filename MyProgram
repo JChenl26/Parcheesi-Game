@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class MyProgram
+{
+    private int currentPlayer;
+    private static JLayeredPane layered;
+    public static void main(String[] args)
+    {
+        int[][] changePos = {{1, 1}, {2, 1}, {1, 2}, {2, 2}};
+        int change = 1;
+        layered = new JLayeredPane();
+        layered.setBounds(0, 0, 341, 500);
+        Board boards = new Board();
+        Test test = new Test();
+        boards.setBounds(0, 0, 341, 500);
+        layered.add(boards, Integer.valueOf(0));
+        MyFrame frame = new MyFrame(layered, test);
+        JLabel[][] labs = test.getL();
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                JLabel l = labs[i][j];
+                if(i == 0){
+                    l.setBounds(230 + (20 * changePos[j][0]), 225 + (20 * changePos[j][1]), 21, 21);
+                }
+                else if(i == 1){
+                    l.setBounds(30 + (20 * changePos[j][0]), 225 + (20 * changePos[j][1]), 21, 21);
+                }
+                else if(i == 2){
+                    l.setBounds(30 + (20 * changePos[j][0]), 30 + (20 * changePos[j][1]), 21, 21);
+                }
+                else{
+                    l.setBounds(230 + (20 * changePos[j][0]), 30 + (20 * changePos[j][1]), 21, 21);
+                }
+                l.addMouseListener(frame);
+                l.addMouseMotionListener(frame);
+                l.setOpaque(false);
+                l.setLayout(null);
+                layered.add(l, Integer.valueOf(2));
+            }
+        }
+        frame.add(layered);
+        System.out.println("Each player has 4 pawns starting in their color's start area. The goal is to move all 4 pawns around the board and into your home space. \nOn your turn, roll two dice. You can move one pawn the total of both dice or split the moves between two pawns. \nTo move a pawn out of start, you must roll a 5 (from one die or the total). Pawns move clockwise and cannot land on your own pieces. \nIf you land exactly on an opponent's pawn, you capture it and send it back to their start. Rolling doubles gives you an extra turn. \nTo reach home, you must roll the exact number. The first player to get all 4 pawns to their home wins.");
+        
+        
+    }
+}
