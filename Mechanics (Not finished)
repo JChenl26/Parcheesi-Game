@@ -1,0 +1,141 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+public class Mechanics extends JPanel{
+    private int current;
+    private JLabel turn;
+    private JLabel bottom;
+    private int count;
+    private Point[] greenPath;
+    private Point[] yellowPath;
+    private Point[] bluePath;
+    private Point[] redPath;
+    private int pos;
+    private Point[] path;
+    private int[][] positions;
+    private JLabel[][] labels;
+    private Test t;
+    private Point[][] paths;
+    private int c;
+    //private JLayeredPane layered;
+    public Mechanics(Test t){
+        this.t = t;
+        positions = new int[4][4];
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                positions[i][j] = -1;
+            }
+        }
+        labels = t.getL();
+        pos = -1;
+        count = 0;
+        current = 0;
+        turn = new JLabel();
+        bottom = new JLabel();
+        turn.setBounds(280, 375, 130, 25);
+        turn.setOpaque(false);
+        turn.setText("------");
+        turn.setLayout(null);
+        turn.setVisible(true);
+        bottom.setBounds(280, 395, 130, 25);
+        bottom.setOpaque(false);
+        bottom.setText("Turn");
+        bottom.setLayout(null);
+        bottom.setVisible(true);
+        setPath();
+        paths = new Point[][]{greenPath, yellowPath, bluePath, redPath};
+        path = paths[0];
+        c = 0;
+    }
+    
+    public void setPath(){
+        greenPath = new Point[]{
+            new Point(7, 4), new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(6, 7), new Point(5, 7), new Point(4, 7), 
+            new Point(3, 7), new Point(2, 7), new Point(1, 7), new Point(0, 7), new Point(0, 8), new Point(0, 9), new Point(1, 9), 
+            new Point(2, 9), new Point(3, 9), new Point(4, 9), new Point(5, 9), new Point(6, 9), new Point(7, 9), new Point(7, 10), 
+            new Point(7, 11), new Point(7, 12), new Point(7, 13), new Point(7, 14), new Point(7, 15), new Point(7, 16), new Point(8, 16), 
+            new Point(9, 16), new Point(9, 15), new Point(9, 14), new Point(9, 13), new Point(9, 12), new Point(9, 11), new Point(9, 10), 
+            new Point(9, 9), new Point(10, 9), new Point(11, 9), new Point(12, 9), new Point(13, 9), new Point(14, 9), new Point(15, 9), 
+            new Point(16, 9), new Point(16, 8), new Point(16, 7), new Point(15, 7), new Point(14, 7), new Point(13, 7), new Point(12, 7), 
+            new Point(11, 7), new Point(10, 7), new Point(9, 7), new Point(9, 6), new Point(9, 5), new Point(9, 4), new Point(9, 3), 
+            new Point(9, 2), new Point(9, 1), new Point(9, 0), new Point(8, 0), new Point(8, 1), new Point(8, 2), new Point(8, 3), 
+            new Point(8, 4), new Point(8, 5), new Point(8, 6), new Point(8, 7), new Point(8, 8)
+        };
+        yellowPath = new Point[]{
+            new Point(12, 7), new Point(11, 7), new Point(10, 7), new Point(9, 7), new Point(9, 6), new Point(9, 5), new Point(9, 4), 
+            new Point(9, 3), new Point(9, 2), new Point(9, 1), new Point(9, 0), new Point(8, 0), new Point(7, 0), new Point(7, 1), 
+            new Point(7, 2), new Point(7, 3), new Point(7, 4), new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(6, 7), 
+            new Point(5, 7), new Point(4, 7), new Point(3, 7), new Point(2, 7), new Point(1, 7), new Point(0, 7), new Point(0, 8), 
+            new Point(0, 9), new Point(1, 9), new Point(2, 9), new Point(3, 9), new Point(4, 9), new Point(5, 9), new Point(6, 9), 
+            new Point(7, 9), new Point(7, 10), new Point(7, 11), new Point(7, 12), new Point(7, 13), new Point(7, 14), new Point(7, 15),
+            new Point(7, 16), new Point(8, 16), new Point(9, 16), new Point(9, 15), new Point(9, 14), new Point(9, 13), new Point(9, 12), 
+            new Point(9, 11), new Point(9, 10), new Point(9, 9), new Point(10, 9), new Point(11, 9), new Point(12, 9), new Point(13, 9), 
+            new Point(14, 9), new Point(15, 9), new Point(16, 9), new Point(16, 8), new Point(15, 8), new Point(14, 8), new Point(13, 8), 
+            new Point(12, 8), new Point(11, 8), new Point(10, 8), new Point(9, 8), new Point(8, 8)
+        };
+        bluePath = new Point[]{
+            new Point(4, 9), new Point(5, 9), new Point(6, 9), new Point(7, 9), new Point(7, 10), new Point(7, 11), new Point(7, 12), 
+            new Point(7, 13), new Point(7, 14), new Point(7, 15), new Point(7, 16), new Point(8, 16), new Point(9, 16), new Point(9, 15), 
+            new Point(9, 14), new Point(9, 13), new Point(9, 12), new Point(9, 11), new Point(9, 10), new Point(9, 9), new Point(10, 9), 
+            new Point(11, 9), new Point(12, 9), new Point(13, 9), new Point(14, 9), new Point(15, 9), new Point(16, 9), new Point(16, 8), 
+            new Point(16, 7), new Point(15, 7), new Point(14, 7), new Point(13, 7), new Point(12, 7), new Point(11, 7), new Point(10, 7), 
+            new Point(9, 7), new Point(9, 6), new Point(9, 5), new Point(9, 4), new Point(9, 3), new Point(9, 2), new Point(9, 1), 
+            new Point(9, 0), new Point(8, 0), new Point(7, 0), new Point(7, 1), new Point(7, 2), new Point(7, 3), new Point(7, 4), 
+            new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(6, 7), new Point(5, 7), new Point(4, 7), new Point(3, 7), 
+            new Point(2, 7), new Point(1, 7), new Point(0, 7), new Point(0, 8), new Point(1, 8), new Point(2, 8), new Point(3, 8), 
+            new Point(4, 8), new Point(5, 8), new Point(6, 8), new Point(7, 8), new Point(8, 8)
+        };
+        redPath = new Point[]{
+            new Point(9, 12), new Point(9, 11), new Point(9, 10), new Point(9, 9), new Point(10, 9), new Point(11, 9), new Point(12, 9), 
+            new Point(13, 9), new Point(14, 9), new Point(15, 9), new Point(16, 9), new Point(16, 8), new Point(16, 7), new Point(15, 7), 
+            new Point(14, 7), new Point(13, 7), new Point(12, 7), new Point(11, 7), new Point(10, 7), new Point(9, 7), new Point(9, 6), 
+            new Point(9, 5), new Point(9, 4), new Point(9, 3), new Point(9, 2), new Point(9, 1), new Point(9, 0), new Point(8, 0), 
+            new Point(7, 0), new Point(7, 1), new Point(7, 2), new Point(7, 3), new Point(7, 4), new Point(7, 5), new Point(7, 6), 
+            new Point(7, 7), new Point(6, 7), new Point(5, 7), new Point(4, 7), new Point(3, 7), new Point(2, 7), new Point(1, 7), 
+            new Point(0, 7), new Point(0, 8), new Point(0, 9), new Point(1, 9), new Point(2, 9), new Point(3, 9), new Point(4, 9), 
+            new Point(5, 9), new Point(6, 9), new Point(7, 9), new Point(7, 10), new Point(7, 11), new Point(7, 12), new Point(7, 13), 
+            new Point(7, 14), new Point(7, 15), new Point(7, 16), new Point(8, 16), new Point(8, 15), new Point(8, 14), new Point(8, 13), 
+            new Point(8, 12), new Point(8, 11), new Point(8, 10), new Point(8, 9), new Point(8, 8)
+        };
+    }
+    
+    public Point[] getGreenPath(){
+        return redPath;
+    }
+    
+    public JLabel getTurn(){
+        return turn;
+    }
+    
+    public JLabel getBottom(){
+        return bottom;
+    }
+    
+    public void nextTurn(){
+        current = (current + 1) % 4;
+        String[] currentTurn = {"Red", "Green", "Yellow", "Blue"};
+        turn.setText(currentTurn[current] + "'s");
+    }
+    
+    public void turn(int color, int p, int random, int random2){
+        random++;
+        random2++;
+        JLabel label = labels[color][p];
+        if(positions[color][p] == -1 && (random == 5 || random2 == 5 || random + random2 == 5)){
+            positions[color][p] = 0;
+        }
+        else if(positions[color][p] >= 0){
+            positions[color][p] += random + random2;
+        }
+        
+        pos = positions[color][p];
+        int x = (int) path[pos].getX() * 20;
+        int y = (int) path[pos].getY() * 20;
+        label.setBounds(x, y, 341, 500);
+        c++;
+        if(c == 4){
+            c = 0;
+        }
+        path = paths[c];
+    }
+}
