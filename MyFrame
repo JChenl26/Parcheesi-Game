@@ -1,0 +1,138 @@
+import java.awt.*;
+import java.awt.event.*;
+//import java.awt.event.MouseMotionListener;
+import javax.swing.*;
+
+public class MyFrame extends JFrame implements MouseListener, MouseMotionListener{
+    private Dice dice;
+    private Dice dice2;
+    private JLabel[] dices2;
+    private JLabel[] dices;;
+    private int offsetX;
+    private int offsetY;
+    private JLayeredPane layered;
+    private Component draggedComponent;
+    private JLabel current;
+    private JLabel current2;
+    private Mechanics m;
+    private Testing t;
+    private Point[] path;
+    private Test test;
+    private JLabel[][] l;
+    MyFrame(JLayeredPane layered, Test test){
+        this.test = test;
+        l = test.getL();
+        current = null;
+        current2 = null;
+        this.layered = layered;
+        this.setTitle("Paricheesi");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(341, 500);
+        this.setLayout(null);
+        dice = new Dice();
+        dice2 = new Dice();
+        dices2 = dice2.getDices();
+        dices = dice.getDices();
+        m = new Mechanics(test);
+        //layered.add(m.getTurn(), Integer.valueOf(3));
+        //layered.add(m.getBottom(), Integer.valueOf(3));
+        path = m.getGreenPath();
+        t = new Testing();
+        t.setBounds(120, 140, 341, 500);
+        t.setOpaque(false);
+        //layered.add(t, Integer.valueOf(5));
+        /*
+        for(int i = 0; i < 7; i++){
+            Testing t = new Testing();
+            t.setBounds((int)path[i].getX() * 20, (int)path[i].getY() * 20, 341, 500);
+            t.setOpaque(false);
+            layered.add(t, Integer.valueOf(5));
+        }
+        */
+        for(int i = 0; i < 6; i++){
+            dices[i].setName("dice");
+            dices[i].setBounds(65, 345, 101, 101);
+            dices[i].addMouseListener(this);
+            dices[i].setVisible(false);
+            dices[i].setOpaque(true);
+            dices[i].setBackground(Color.WHITE);
+            dices[i].setLayout(null);
+            layered.add(dices[i], Integer.valueOf(1));
+        }
+        for(int i = 0; i < 6; i++){
+            dices2[i].setName("dice");
+            dices2[i].setBounds(175, 345, 101, 101);
+            dices2[i].addMouseListener(this);
+            dices2[i].setVisible(false);
+            dices2[i].setOpaque(true);
+            dices2[i].setBackground(Color.WHITE);
+            dices2[i].setLayout(null);
+            layered.add(dices2[i], Integer.valueOf(1));
+        }
+        
+        current = dices[0];
+        current2 = dices2[0];
+        current2.setVisible(true);
+        current.setVisible(true);
+        this.setVisible(true);
+    }
+    
+    public void mouseClicked(MouseEvent e){
+        if("dice".equals(e.getComponent().getName())){
+            m.nextTurn();
+            if (current.getParent() != null) {
+                current.setVisible(false);
+            }
+            if (current2.getParent() != null) {
+                current2.setVisible(false);
+            }
+            int random = (int)(Math.random() * 6);
+            int random2 = (int)(Math.random() * 6);
+            current = dices[random];
+            current2 = dices2[random2];
+            System.out.println("You Rolled: " + (random + 1));
+            System.out.println("You Rolled: " + (random2 + 1));
+            current.setVisible(true);
+            current2.setVisible(true);
+            //m.turn(0, 0, random, random2);
+        }else{
+        }
+    }
+    
+    public void mouseEntered(MouseEvent e){
+        
+    }
+    
+    public void mouseExited(MouseEvent e){
+        
+    }
+    
+    public void mouseReleased(MouseEvent e){
+        
+    }
+    
+    public void mouseMoved(MouseEvent e){
+        
+    }
+    
+    public void mousePressed(MouseEvent e){
+            draggedComponent = e.getComponent();
+            Point p = SwingUtilities.convertPoint(draggedComponent, e.getPoint(), this);
+            offsetX = p.x - draggedComponent.getX();
+            offsetY = p.y - draggedComponent.getY();
+    }
+    
+    public void mouseDragged(MouseEvent e){
+        Point p = SwingUtilities.convertPoint(draggedComponent, e.getPoint(), getParent());
+        draggedComponent.setLocation(p.x - offsetX, p.y - offsetY);
+    }
+    
+    public void delay(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+}
