@@ -1,0 +1,89 @@
+import javax.swing.*;
+import java.awt.*;
+public class Dice extends JLabel{
+    private JLabel[] dices;
+    public Dice(){
+        dices = new JLabel[6];
+        final Color color = Color.BLACK;
+        for(int i = 0; i < 6; i++){
+            if(i == 0){
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                        super.paintComponent(g);
+                        g.setColor(color);
+                        g.fillOval(35, 35, 30, 30);
+                        g.drawRect(0, 0, 100, 100);
+                    }
+                };
+            }
+            else if(i == 1){
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                        super.paintComponent(g);
+                        g.setColor(color);
+                        g.fillOval(20, 20, 20, 20);
+                        g.fillOval(55, 60, 20, 20);
+                        g.drawRect(0, 0, 100, 100);
+                    }
+                };
+            }
+            else if(i == 2){
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                        super.paintComponent(g);
+                        g.setColor(color);
+                        g.fillOval(10, 10, 20, 20);
+                        g.fillOval(40, 40, 20, 20);
+                        g.fillOval(70, 70, 20, 20);
+                        g.drawRect(0, 0, 100, 100);
+                    }
+                };
+            }
+            else if(i == 3){
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                        super.paintComponent(g);
+                        g.setColor(color);
+                        g.fillOval(15, 15, 20, 20);
+                        g.fillOval(15, 65, 20, 20);
+                        g.fillOval(65, 15, 20, 20);
+                        g.fillOval(65, 65, 20, 20);
+                        g.drawRect(0, 0, 100, 100);
+                    }
+                };
+            }
+            else if(i == 4){
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                        super.paintComponent(g);
+                        g.setColor(color);
+                        g.fillOval(15, 10, 20, 20);
+                        g.fillOval(40, 40, 20, 20);
+                        g.fillOval(15, 65, 20, 20);
+                        g.fillOval(65, 10, 20, 20);
+                        g.fillOval(65, 65, 20, 20);
+                        g.drawRect(0, 0, 100, 100);
+                    }
+                };
+            }
+            else{
+                dices[i] = new JLabel(){
+                    public void paintComponent(Graphics g){
+                    super.paintComponent(g);
+                    g.setColor(color);
+                    g.fillOval(15, 10, 20, 20);
+                    g.fillOval(15, 40, 20, 20);
+                    g.fillOval(15, 65, 20, 20);
+                    g.fillOval(60, 10, 20, 20);
+                    g.fillOval(60, 40, 20, 20);
+                    g.fillOval(60, 65, 20, 20);
+                    g.drawRect(0, 0, 100, 100);
+                    }  
+                };
+            }
+        }
+    }
+    public JLabel[] getDices(){
+            return dices;
+    }
+}
