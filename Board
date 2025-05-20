@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Board extends JPanel implements MouseListener
+{
+    public Board(){
+        this.addMouseListener(this);
+    }
+    @Override
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        this.setBackground(Color.WHITE);
+        int rows = 17;
+        int cols = 17;
+        int cellSize = 20;
+        // Make sure to make borders for all except the big squares with if statements
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if((i < 7 && j < 7) || (i > 3 && i < 5 && j < 8 && j > 6) || (i < 8 && i > 0 && j < 9 && j > 7)){
+                    g.setColor(new Color(136,231,136));
+
+                }
+                else if((i > 9 && i < 17 && j < 7) || (i > 7 && i < 9 && j > 0 && j < 8) || (i > 8 && i < 10 && j > 3 && j < 5)){
+                    g.setColor(new Color(0,125,255));
+                    
+                }
+                else if((i < 7 && j > 9 && j < 17) || (i > 6 && i < 8 && j > 11 && j < 13) || (i < 9 && i > 7 && j > 8 && j < 16)){
+                    g.setColor(new Color(255, 255, 128));
+                }
+                else if((i > 9 && j > 9) || (i > 8 && i < 16 && j < 9 && j > 7) || (j > 8 && j < 10 && i > 11 && i < 13)){
+                    g.setColor(new Color(255,80,80));
+                }
+                else if((i > 6 && i < 8 && j > 3 && j < 5) || (i > 7 && i < 9 && (j < 1 || j > 15)) || ((i < 1 || i > 15) && j > 7 && j < 9) || (i > 3 && i < 5 && j > 8 && j < 10) || (i > 11 && i < 13 && j > 6 && j < 8) || (i > 8 && i < 10 && j > 11 && j < 13)){
+                    g.setColor(new Color(190, 100, 0));
+                }
+                else{
+                    g.setColor(new Color(255, 229, 141));
+                    
+                }
+                g.fillRect(j * cellSize, i * cellSize, cellSize, cellSize);
+            }
+        }
+        
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+              if((i > 6 && i < 10) || (j > 6 && j < 10)){
+                  g.setColor(Color.BLACK);
+                  g.drawRect(j * cellSize, i * cellSize, cellSize, cellSize);
+              }
+            }  
+        }
+        g.drawLine(0, 0, 0, rows * cellSize);
+        g.drawLine(0, 0, rows * cellSize, 0);
+        g.drawLine(0, rows * cellSize, rows * cellSize, rows * cellSize);
+        g.drawLine(rows * cellSize, 0, rows * cellSize, rows * cellSize);
+        
+    }
+    
+    public void mouseClicked(MouseEvent e){
+        System.out.println(e.getX() + ", " + e.getY());
+    }
+    public void mouseEntered(MouseEvent e){
+        
+    }
+    public void mouseReleased(MouseEvent e){
+        
+    }
+    public void mouseExited(MouseEvent e){
+        
+    }
+    public void mousePressed(MouseEvent e){
+        
+    }
+}
